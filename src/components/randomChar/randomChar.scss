@@ -14,7 +14,7 @@
     &__img {
         width: 180px;
         height: 180px;
-        object-fit: cover;
+        object-fit: cover; // set 'contain' for normal image when image_not_available
     }
     &__info {
         display: grid;
