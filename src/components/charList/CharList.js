@@ -1,52 +1,78 @@
 import './charList.scss';
-import abyss from '../../resources/img/abyss.jpg';
-import CharactorItem from './JSX/CharactorItem';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/spinner';
 import MarvelService from '../../services/MarvelService';
 import { Component } from 'react';
 
 class CharList extends Component {
-    constructor(props) {
-        super(props)
-    }
+
     state = {
-        charactors: [],
-        loading: true
+        charList: [],
+        loading: true,
+        error: false
     }
 
     marvelService = new MarvelService();
 
-    onCharatcorList = () => {
+    componentDidMount() {
         this.marvelService.getAllCharacters()
-            .then(this.onCharactarsLoading);
+            .then(this.onCharListLoaded)
+            .catch(this.onError)
     }
 
-    onCharactarsLoading = (charactors) => {
-        this.setState({ charactors, loading: false });
-        console.log(this.state.loading);
+    onCharListLoaded = (charList) => {
+        this.setState({
+            charList,
+            loading: false
+        })
     }
-    componentDidMount() {
-        this.onCharatcorList();
+
+    onError = () => {
+        this.setState({
+            error: true,
+            loading: false
+        })
     }
-    render() {
-        const { loading } = this.state;
-        const spinner = loading ? <Spinner /> : null;
-        let listCharactor = null;
-        let i = 0;
-        if (this.state.charactors.length > 0) {
-            listCharactor = this.state.charactors.map((item, i) => {
-                const { name, thumbnail } = item;
-                return (
-                    <CharactorItem name={name} thumbnail={thumbnail} key={i} />
-                )
-            })
-        }
+
+    renderItems(arr) {
+        const items = arr.map((item) => {
+            let imgStyle = { 'objectFit': 'cover' };
+            if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+                imgStyle = { 'objectFit': 'unset' };
+            }
+
+            return (
+                <li
+                    className="char__item"
+                    key={item.id}>
+                    <img src={item.thumbnail} alt={item.name} style={imgStyle} />
+                    <div className="char__name">{item.name}</div>
+                </li>
+            )
+        });
+        // А эта конструкция вынесена для центровки спиннера/ошибки
         return (
-            <div className="char__list" >
-                <ul className="char__grid">
-                    {spinner}
-                    {listCharactor}
-                </ul>
+            <ul className="char__grid">
+                {items}
+            </ul>
+        )
+    }
+
+    render() {
+
+        const { charList, loading, error } = this.state;
+
+        const items = this.renderItems(charList);
+
+        const errorMessage = error ? <ErrorMessage /> : null;
+        const spinner = loading ? <Spinner /> : null;
+        const content = !(loading || error) ? items : null;
+
+        return (
+            <div className="char__list">
+                {errorMessage}
+                {spinner}
+                {content}
                 <button className="button button__main button__long">
                     <div className="inner">load more</div>
                 </button>
@@ -54,7 +80,5 @@ class CharList extends Component {
         )
     }
 }
-
-
 
 export default CharList;
