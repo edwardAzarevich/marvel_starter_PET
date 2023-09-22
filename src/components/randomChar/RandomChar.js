@@ -7,43 +7,50 @@ import mjolnir from '../../resources/img/mjolnir.png';
 import MarvelService from '../../services/MarvelService';
 
 
-const RandomChar = (props) => {
-    const [charactor, setCharactor] = useState(),
-        [loading, setLoading] = useState(true),
-        [error, setError] = useState(false),
-        marvelService = new MarvelService();
+const RandomChar = () => {
 
-    const onCharLoaded = (charactor) => {
-        setCharactor(charactor);
+    const [char, setChar] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    const marvelService = new MarvelService();
+
+    useEffect(() => {
+        updateChar();
+        const timerId = setInterval(updateChar, 60000);
+
+        return () => {
+            clearInterval(timerId)
+        }
+    }, [])
+
+    const onCharLoaded = (char) => {
+        setLoading(false);
+        setChar(char);
+    }
+
+    const onCharLoading = () => {
+        setLoading(true);
+    }
+
+    const onError = () => {
+        setError(true);
         setLoading(false);
     }
 
     const updateChar = () => {
-        let id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        //id = 1017100;
+        const id = Math.floor(Math.random() * (1011400 - 1011000)) + 1011000;
+        onCharLoading();
         marvelService
             .getCharacter(id)
             .then(onCharLoaded)
-            .catch(onError)
+            .catch(onError);
     }
 
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
-
-    useEffect(() => {
-        updateChar();
-        clearImmediate(props.timeId);
-    }, [])
-
-    const onClickTryIt = () => {
-        setLoading(true);
-        updateChar();
-    }
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const content = !(loading || error) ? <View characrot={charactor} /> : null;
+    const content = !(loading || error || !char) ? <View char={char} /> : null;
+
     return (
         <div className="randomchar">
             {errorMessage}
@@ -57,7 +64,7 @@ const RandomChar = (props) => {
                 <p className="randomchar__title">
                     Or choose another one
                 </p>
-                <button onClick={() => onClickTryIt()} className="button button__main">
+                <button onClick={updateChar} className="button button__main">
                     <div className="inner">try it</div>
                 </button>
                 <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
@@ -66,12 +73,13 @@ const RandomChar = (props) => {
     )
 }
 
-const View = ({ characrot }) => {
-    const { name, description, thumbnail, homepage, wiki } = characrot;
+const View = ({ char }) => {
+    const { name, description, thumbnail, homepage, wiki } = char;
     let imgStyle = { 'objectFit': 'cover' };
-    if (thumbnail.includes('image_not_available')) {
+    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = { 'objectFit': 'contain' };
     }
+
     return (
         <div className="randomchar__block">
             <img src={thumbnail} alt="Random character" className="randomchar__img" style={imgStyle} />
