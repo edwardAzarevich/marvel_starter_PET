@@ -1,7 +1,7 @@
-import {useHttp} from '../hooks/http.hook';
+import { useHttp } from '../hooks/http.hook';
 
 const useMarvelService = () => {
-    const {loading, request, error, clearError} = useHttp();
+    const { loading, request, error, clearError } = useHttp();
 
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
     // ЗДЕСЬ БУДЕТ ВАШ КЛЮЧ, ЭТОТ КЛЮЧ МОЖЕТ НЕ РАБОТАТЬ
@@ -48,11 +48,11 @@ const useMarvelService = () => {
             pageCount: comics.pageCount ? `${comics.pageCount} p.` : 'No information about the number of pages',
             thumbnail: comics.thumbnail.path + '.' + comics.thumbnail.extension,
             language: comics.textObjects.language || 'en-us',
-            price: comics.prices.price ? `${comics.prices.price}$` : 'not available'
+            price: comics.prices ? comics.prices : 'not available'
         }
     }
 
-    return {loading, error, clearError, getAllCharacters, getCharacter, getAllComics, getComics}
+    return { loading, error, clearError, getAllCharacters, getCharacter, getAllComics, getComics }
 }
 
 export default useMarvelService;
