@@ -1,27 +1,25 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { MainPage, ComicsPage } from '../pages';
 import AppHeader from "../appHeader/AppHeader";
 
 const App = () => {
 
     return (
-        <Router>
+        <BrowserRouter>
             <div className="app">
                 <AppHeader />
                 <main>
                     <Switch>
-                        <Router>
-                            <Route exact path="/">
-                                <MainPage />
-                            </Route>
-                            <Route exact path="/comics">
-                                <ComicsPage />
-                            </Route>
-                        </Router>
+                        <Route exact path="/">
+                            <MainPage />
+                        </Route>
+                        <Route exact path="/comics">
+                            <ComicsPage />
+                        </Route>
                     </Switch>
                 </main>
             </div>
-        </Router>
+        </BrowserRouter>
     )
 }
 
