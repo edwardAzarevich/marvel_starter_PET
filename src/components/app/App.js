@@ -10,7 +10,7 @@ import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 import decoration from '../../resources/img/vision.png';
 
 const App = () => {
-    
+
     const [selectedChar, setChar] = useState(null);
 
     const onCharSelected = (id) => {
@@ -19,22 +19,22 @@ const App = () => {
 
     return (
         <div className="app">
-            <AppHeader/>
+            <AppHeader />
             <main>
-                {/* <ErrorBoundary>
-                    <RandomChar/>
+                <ErrorBoundary>
+                    <RandomChar />
                 </ErrorBoundary>
                 <div className="char__content">
                     <ErrorBoundary>
-                        <CharList onCharSelected={onCharSelected}/>
+                        <CharList onCharSelected={onCharSelected} />
                     </ErrorBoundary>
                     <ErrorBoundary>
-                        <CharInfo charId={selectedChar}/>
+                        <CharInfo charId={selectedChar} />
                     </ErrorBoundary>
                 </div>
-                <img className="bg-decoration" src={decoration} alt="vision"/> */}
-                <AppBanner/>
-                <ComicsList/>
+                <img className="bg-decoration" src={decoration} alt="vision" />
+                {/* <AppBanner/>
+                <ComicsList/> */}
             </main>
         </div>
     )
