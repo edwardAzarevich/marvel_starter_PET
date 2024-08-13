@@ -19,13 +19,13 @@ const App = () => {
                 <AppHeader />
                 <main>
                     <Suspense fallback={<Spinner />}>
-                        <Routes>
+                        {/* <Routes>
                             <Route path="/" element={<MainPage />} />
                             <Route path="/comics" element={<ComicsPage />} />
                             <Route path="/comics/:comicId" element={<SingleComicPage />} />
                             {<Route path='*' element={<Page404 />} />}
-                        </Routes>
-                        {/* <Context /> */}
+                        </Routes> */}
+                        <Context />
                     </Suspense>
                 </main>
             </div>
@@ -55,8 +55,8 @@ const Context = () => {
             <Routes location={displayLocation}>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/comics" element={<ComicsPage />} />
-                {/* <Route path="/comics/:comicId" element={<SingleComicPage />} />
-                {<Route path='*' element={<Page404 />} />} */}
+                <Route path="/comics/:comicId" element={<SingleComicPage />} />
+                {<Route path='*' element={<Page404 />} />}
             </Routes>
         </div>
     );
