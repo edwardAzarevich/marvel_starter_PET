@@ -1,40 +1,42 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, lazy, Suspense } from "react";
+import {
+    BrowserRouter,
+    Link,
+    useLocation,
+    Route,
+    Routes
+} from "react-router-dom";
+import "./app.css";
 import AppHeader from "../appHeader/AppHeader";
 import Spinner from '../spinner/Spinner';
+
 
 const Page404 = lazy(() => import('../pages/404'));
 const MainPage = lazy(() => import('../pages/MainPage'));
 const ComicsPage = lazy(() => import('../pages/ComicsPage'));
 const SingleComicPage = lazy(() => import('../pages/SingleComicPage'));
 
-
-const App = () => {
+export default function App() {
     return (
         <BrowserRouter>
-            <div className="app">
+            <div className='App'>
                 <AppHeader />
-                <main>
-                    <Suspense fallback={<Spinner />}>
-                        <Routes>
-                            <Route path="/" element={<MainPage />} />
-                            <Route path="/comics" element={<ComicsPage />} />
-                            <Route path="/comics/:comicId" element={<SingleComicPage />} />
-                            {<Route path='*' element={<Page404 />} />}
-                        </Routes>
-                        {/* <Context /> */}
-                    </Suspense>
-                </main>
+                <Suspense fallback={<Spinner />}>
+                    {/* <nav>
+                    <Link to="/">Home</Link>
+                    <Link to="/other">Other</Link>
+                </nav> */}
+
+                    <Content />
+                </Suspense>
             </div>
         </BrowserRouter>
-    )
+    );
 }
 
-const Context = () => {
+function Content() {
     const location = useLocation();
+
     const [displayLocation, setDisplayLocation] = useState(location);
     const [transitionStage, setTransistionStage] = useState("fadeIn");
 
@@ -55,11 +57,9 @@ const Context = () => {
             <Routes location={displayLocation}>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/comics" element={<ComicsPage />} />
-                {/* <Route path="/comics/:comicId" element={<SingleComicPage />} />
-                {<Route path='*' element={<Page404 />} />} */}
+                <Route path="/comics/:comicId" element={<SingleComicPage />} />
+                {<Route path='*' element={<Page404 />} />}
             </Routes>
         </div>
     );
 }
-
-export default App;
