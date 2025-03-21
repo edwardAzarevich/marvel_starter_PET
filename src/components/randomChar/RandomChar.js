@@ -12,11 +12,11 @@ const RandomChar = () => {
     const { loading, error, getCharacter, clearError } = useMarvelService();
 
     useEffect(() => {
-        // updateChar();
-        // const timerId = setInterval(updateChar, 60000);
+        updateChar();
+        const timerId = setInterval(updateChar, 60000);
 
         return () => {
-            // clearInterval(timerId)
+            clearInterval(timerId)
         }
     }, [])
 
