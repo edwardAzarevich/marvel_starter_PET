@@ -16,7 +16,7 @@ const ComicsList = () => {
     const { loading, error, getAllComics } = useMarvelService();
 
     useEffect(() => {
-        onRequest(offset, true);
+        // onRequest(offset, true);
     }, [])
 
     const onRequest = (offset, initial) => {
