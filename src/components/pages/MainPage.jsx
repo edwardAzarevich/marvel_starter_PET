@@ -5,6 +5,7 @@ import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 import decoration from '../../resources/img/vision.png';
+import FindForm from '../findForm/FindForm';
 
 
 const MainPage = () => {
@@ -24,7 +25,9 @@ const MainPage = () => {
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <CharInfo charId={selectedChar} />
+                    <FindForm />
                 </ErrorBoundary>
+
             </div>
             <img className="bg-decoration" src={decoration} alt="vision" />
         </>
