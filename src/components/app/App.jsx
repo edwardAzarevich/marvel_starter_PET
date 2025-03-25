@@ -2,6 +2,9 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { useState, useEffect } from 'react';
+import SingleCharacterLayout from '../pages/singleCharacterLayout/SingleCharacterLayout';
+import SingleComicLayout from '../pages/singleComicLayout/SingleComicLayout';
+
 
 import AppHeader from "../appHeader/AppHeader";
 import Spinner from '../spinner/Spinner';
@@ -55,7 +58,8 @@ const Context = () => {
             <Routes location={displayLocation}>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/comics" element={<ComicsPage />} />
-                <Route path="/comics/:comicId" element={<SingleComicPage />} />
+                <Route path="/comics/:id" element={<SingleComicLayout />} />
+                <Route path="/characters/:id" element={<SingleCharacterLayout />} />
                 {<Route path='*' element={<Page404 />} />}
             </Routes>
         </div>
