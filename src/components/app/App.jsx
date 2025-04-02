@@ -4,7 +4,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { useState, useEffect } from 'react';
 import SingleCharacterLayout from '../pages/singleCharacterLayout/SingleCharacterLayout';
 import SingleComicLayout from '../pages/singleComicLayout/SingleComicLayout';
-
+import SinglePage from "../pages/SinglePage";
 
 import AppHeader from "../appHeader/AppHeader";
 import Spinner from '../spinner/Spinner';
@@ -22,12 +22,6 @@ const App = () => {
                 <AppHeader />
                 <main>
                     <Suspense fallback={<Spinner />}>
-                        {/* <Routes>
-                            <Route path="/" element={<MainPage />} />
-                            <Route path="/comics" element={<ComicsPage />} />
-                            <Route path="/comics/:comicId" element={<SingleComicPage />} />
-                            {<Route path='*' element={<Page404 />} />}
-                        </Routes> */}
                         <Context />
                     </Suspense>
                 </main>
@@ -58,8 +52,8 @@ const Context = () => {
             <Routes location={displayLocation}>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/comics" element={<ComicsPage />} />
-                <Route path="/comics/:id" element={<SingleComicLayout />} />
-                <Route path="/characters/:id" element={<SingleCharacterLayout />} />
+                <Route path="/comics/:id" element={<SinglePage Component={SingleComicLayout} dataType='comic' />} />
+                <Route path="/characters/:id" element={<SinglePage Component={SingleCharacterLayout} dataType='character' />} />
                 {<Route path='*' element={<Page404 />} />}
             </Routes>
         </div>
