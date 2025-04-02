@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Spinner from '../spinner/Spinner';
+import Spinner from '../spinner/SpinnerCircle';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
 

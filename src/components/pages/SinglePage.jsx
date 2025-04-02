@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import useMarvelService from '../../services/MarvelService';
-import Spinner from '../spinner/Spinner';
+import Spinner from '../spinner/SpinnerCircle';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import AppBanner from "../appBanner/AppBanner";
 
