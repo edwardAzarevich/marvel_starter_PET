@@ -12,7 +12,7 @@ const CharInfo = (props) => {
 
     const [char, setChar] = useState(null);
 
-    const { loading, error, getCharacter, clearError } = useMarvelService();
+    const { loading, error, getCharacter, clearError, process } = useMarvelService();
 
     useEffect(() => {
         updateChar()
@@ -47,8 +47,6 @@ const CharInfo = (props) => {
         </div>
     )
 }
-
-// FSM - finite-state machine
 
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki, comics } = char;
