@@ -48,6 +48,8 @@ const CharInfo = (props) => {
     )
 }
 
+// FSM - finite-state machine
+
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki, comics } = char;
 
