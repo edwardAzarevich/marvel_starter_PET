@@ -4,9 +4,23 @@ import PropTypes from 'prop-types';
 import Spinner from '../spinner/SpinnerCircle';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
-import setContent from '../../utils/setContent';
 
 import './charList.scss';
+
+const setContent = (process, Component, newItemLoading) => {
+    switch (process) {
+        case 'waiting':
+            return <Spinner />;
+        case 'loading':
+            return newItemLoading ? <Component /> : <Spinner />;
+        case 'confirmed':
+            return <Component />;
+        case 'error':
+            return <ErrorMessage />;
+        default:
+            throw new Error('Unexpected process state')
+    }
+}
 
 const CharList = (props) => {
 
@@ -85,7 +99,7 @@ const CharList = (props) => {
 
     return (
         <div className="char__list">
-            {setContent(process, () => renderItems(charList))}
+            {setContent(process, () => renderItems(charList), newItemLoading)}
             <button
                 className="button button__main button__long"
                 disabled={newItemLoading}
