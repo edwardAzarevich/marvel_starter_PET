@@ -10,7 +10,7 @@ import './charSearchForm.scss';
 
 const CharSearchForm = () => {
     const [char, setChar] = useState(null);
-    const { loading, error, getCharacterByName, clearError } = useMarvelService();
+    const { getCharacterByName, clearError, process, setProcess } = useMarvelService();
     const [isFocused, setIsFocused] = useState(false);
     const onCharLoaded = (char) => {
         setChar(char);
@@ -20,10 +20,11 @@ const CharSearchForm = () => {
         clearError();
 
         getCharacterByName(name)
-            .then(onCharLoaded);
+            .then(onCharLoaded)
+            .then(() => setProcess('confirmed'));
     }
 
-    const errorMessage = (!isFocused && error) ? <div className="char__search-critical-error"><ErrorMessage /></div> : null;
+    const errorMessage = process === 'error' ? <div className="char__search-critical-error"><ErrorMessage /></div> : null;
 
     const results = !char ? null : char.length > 0 ?
         <div className="char__search-wrapper">
@@ -57,13 +58,11 @@ const CharSearchForm = () => {
                             name='charName'
                             type='text'
                             placeholder="Enter name"
-                            onFocus={() => setIsFocused(true)}
-                            onBlur={() => setIsFocused(false)}
                         />
                         <button
                             type='submit'
                             className="button button__main"
-                            disabled={loading}>
+                            disabled={process === 'loading'}>
                             <div className="inner">find</div>
                         </button>
                     </div>
