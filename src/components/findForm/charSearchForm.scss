@@ -1,4 +1,4 @@
-@import '../../style/variables.scss';
+@use '../../style/variables.scss' as *;
 
 .char {
     &__search {
@@ -10,6 +10,7 @@
             background-color: #fff;
             margin-top: 20px;
         }
+
         &-label {
             display: block;
             font-weight: bold;
@@ -17,11 +18,13 @@
             line-height: 24px;
             color: #000;
         }
+
         &-wrapper {
             margin-top: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             input {
                 padding: 0 10px;
                 width: 250px;
@@ -32,6 +35,7 @@
                 font-size: 14px;
             }
         }
+
         &-error {
             margin-top: 25px;
             font-weight: bold;
@@ -39,6 +43,7 @@
             line-height: 24px;
             color: $main-color;
         }
+
         &-success {
             font-weight: bold;
             font-size: 18px;
